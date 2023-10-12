@@ -22,7 +22,12 @@ class DataParser:
             self.headers = reader.__next__()
 
             for row in reader:
-                data.append(row)
+                #strip removes leading and trailing whitespaces
+                #this line can be read as: "if there are any values left after stripping all string values in the row
+                if any(field.strip() for field in row):
+                    data.append(row)
+                else:
+                    print("Empty line found")
             
             self.check_data_integrity(data)            
             return data
