@@ -18,14 +18,11 @@ class DataParser:
             reader = csv.reader(csvfile)
             data = []
             
+            #saving the header for better logging
+            self.headers = reader.__next__()
+
             for row in reader:
                 data.append(row)
-            
-            #saving the header for better logging
-            self.headers = data[0]
-            
-            #we don't need the header inside the data
-            data.pop(0)  
             
             self.check_data_integrity(data)            
             return data

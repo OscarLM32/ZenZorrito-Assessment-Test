@@ -16,6 +16,7 @@ class UserData:
         self.city = data[4]
         self.user_type = data[5]
 
+        #need to check if the field is empty in order for the program not to "crash"
         if data[6] in (None, ''):
             self.last_check_in_date = ''
         else:
