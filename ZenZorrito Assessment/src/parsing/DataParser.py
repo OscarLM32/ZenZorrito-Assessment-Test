@@ -23,8 +23,10 @@ class DataParser:
             
             #saving the header for better logging
             self.headers = data[0]
+            
             #we don't need the header inside the data
-            data.pop(0)     
+            data.pop(0)  
+            
             self.check_data_integrity(data)            
             return data
         
