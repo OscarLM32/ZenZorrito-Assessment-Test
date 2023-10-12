@@ -1,4 +1,5 @@
 import csv
+import logging
 from parsing.UserData import UserData
 
 class DataParser:
@@ -27,24 +28,23 @@ class DataParser:
                 if any(field.strip() for field in row):
                     data.append(row)
                 else:
-                    print("Empty line found")
+                    logging.warning("Empty line found")
             
-            self.check_data_integrity(data)            
-            return data
+            return self.check_data_integrity(data)            
         
 
     def check_data_integrity(self, data):
+        final_data = []
         row_count = 1
         for row in data:
-            if not row:
-                print("Hola")
-                continue
-            
-            for field in range(len(row)):
-                if row[field] in (None, ""):
-                    print('Row: ' + str(row_count) + ' Field: ' + self.headers[field] + ' empty')
-            
+            if not all(row):
+                logging.warning('The row ' + str(row_count) + ' contains empty values. DELETING ROW')
+            else:
+                final_data.append(row)
             row_count += 1
+        
+        return final_data
+
 
                 
                     

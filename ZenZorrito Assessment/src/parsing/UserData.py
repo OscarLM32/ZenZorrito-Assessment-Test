@@ -17,11 +17,11 @@ class UserData:
         self.user_type = data[5]
 
         #need to check if the field is empty in order for the program not to "crash"
+        #this is supposedly handled by the parser, but you can never be to sure
         if data[6] in (None, ''):
             self.last_check_in_date = ''
         else:
             self.last_check_in_date = datetime.strptime(data[6], self.date_format)
-            print(self.last_check_in_date)
 
         self.job = data[7]
         self.phone = data[8]
