@@ -1,5 +1,4 @@
 import csv
-from enum import Flag
 import logging
 from parsing.UserData import UserData
 
@@ -46,6 +45,7 @@ class DataParser:
 
         for i in range(len(data)):
             for j in range(len(data[i])):
+                #need to check if the field is empty and it is part of the mandatory fields
                 if data[i][j] in (None, '') and j in self.mandatory_fields_index:
                     data_missing = True
                     logging.warning('The row ' + str(row_count) + ' contains invalid ' + self.headers[j].upper() + ' value. DELETING ROW')
