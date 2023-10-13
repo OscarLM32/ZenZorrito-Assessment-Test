@@ -15,3 +15,5 @@ data_manipulator = DataManipulator(user_data)
 
 print(data_manipulator.get_earliest_check_in_date_customer())
 print(data_manipulator.get_latest_check_in_date_customer())
+
+print(data_manipulator.get_customer_names())
