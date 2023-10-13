@@ -1,9 +1,14 @@
 import csv
+from enum import Flag
 import logging
 from parsing.UserData import UserData
 
 class DataParser:
     
+    def __init__(self, mandatory_fields = []):
+        self.mandatory_fields = mandatory_fields
+        
+
     def parse_data(self, file):
         data = self.read_csv(file)
         users = []
@@ -19,8 +24,9 @@ class DataParser:
             reader = csv.reader(csvfile)
             data = []
             
-            #saving the header for better logging
+            #saving the header for better logging and exception handling
             self.headers = reader.__next__()
+            self._get_mandatory_field_columns()
 
             for row in reader:
                 #strip removes leading and trailing whitespaces
@@ -36,14 +42,30 @@ class DataParser:
     def check_data_integrity(self, data):
         final_data = []
         row_count = 1
-        for row in data:
-            if not all(row):
-                logging.warning('The row ' + str(row_count) + ' contains empty values. DELETING ROW')
-            else:
-                final_data.append(row)
+        data_missing = False        
+
+        for i in range(len(data)):
+            for j in range(len(data[i])):
+                if data[i][j] in (None, '') and j in self.mandatory_fields_index:
+                    data_missing = True
+                    logging.warning('The row ' + str(row_count) + ' contains invalid ' + self.headers[j].upper() + ' value. DELETING ROW')
+                    
+            if not data_missing:
+                final_data.append(data[i])
             row_count += 1
+            data_missing = False
         
         return final_data
+    
+
+    #gets the index in the header of the required values in data
+    def _get_mandatory_field_columns(self):
+        self.mandatory_fields_index = []
+        for i in range(len(self.headers)):
+            if self.headers[i] in self.mandatory_fields:
+                self.mandatory_fields_index.append(i)
+        #print(self.mandatory_fields_index)        
+        
 
 
                 
