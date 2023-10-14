@@ -9,7 +9,7 @@ I want to analyze my Company data so that I could take advantage of this info an
 - [x] Retrieve a list of customer’s full names ordered alphabetically.
 - [x] Retrieve a list of the companies user’s jobs ordered alphabetically.
 - [x] File required fields are: Street, Zip, City, Last Check-in Date and Company
-- [ ] Check that every exception is handled accordingly
+- [x] Check that every exception is handled accordingly
  
 ### Technical notes
 - [x] The example file has 10 rows of data (excluding the header). But it needs to work with any file.
