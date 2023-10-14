@@ -1,4 +1,3 @@
-import array
 from data_manipulation.DataManipulator import DataManipulator
 from parsing.DataParser import DataParser
 

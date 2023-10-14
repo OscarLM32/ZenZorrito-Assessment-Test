@@ -9,14 +9,14 @@ class DataParser:
         
 
     def parse_data(self, file):
-        data = self.read_csv(file)
+        data = self._read_csv(file)
         users = []
         for row in data:
             users.append(UserData(row))
         return users    
             
         
-    def read_csv(self, file):
+    def _read_csv(self, file):
         #with -> try/catch and closes the file
         #I was having trouble with the encoding so I had to specifically define
         with open(file, 'r', encoding='utf_8') as csvfile:
@@ -27,18 +27,19 @@ class DataParser:
             self.headers = reader.__next__()
             self._get_mandatory_field_columns()
 
+            row_count = 1
             for row in reader:
                 #strip removes leading and trailing whitespaces
                 #this line can be read as: "if there are any values left after stripping all string values in the row
                 if any(field.strip() for field in row):
                     data.append(row)
                 else:
-                    logging.warning("Empty line found")
-            
-            return self.check_data_integrity(data)            
+                    logging.warning("The row " + str(row_count) + " is empty. DELETING ROW")
+                row_count += 1
+            return self._check_data_integrity(data)            
         
 
-    def check_data_integrity(self, data):
+    def _check_data_integrity(self, data):
         final_data = []
         row_count = 1
         data_missing = False        
