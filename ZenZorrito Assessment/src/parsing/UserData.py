@@ -1,5 +1,7 @@
 
 from datetime import datetime
+import logging
+import sys
 
 
 class UserData:
@@ -21,7 +23,11 @@ class UserData:
         if data[6] in (None, ''):
             self.last_check_in_date = ''
         else:
-            self.last_check_in_date = datetime.strptime(data[6], self.date_format)
+            try:
+                self.last_check_in_date = datetime.strptime(data[6], self.date_format)
+            except:
+                logging.error("The time date specified for user: " + self.first_name + " " + self.last_name + " is invalid.\n STOPPING PROGRAM")
+                sys.exit(0)
 
         self.job = data[7]
         self.phone = data[8]
